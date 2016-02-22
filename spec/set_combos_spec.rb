@@ -1,4 +1,5 @@
 require 'spec_helper'
+# require "../../test_menu.txt"
 
 describe SetCombos do
   it 'has a version number' do
