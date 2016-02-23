@@ -9,6 +9,9 @@ class Menu
 	end
 
 	def get_combos
+		prices = []
+		items.each {|item| prices << item.price_as_float}
+		permutations = self.get_sum_of_all_permutations(prices)
 	end
 
 	private

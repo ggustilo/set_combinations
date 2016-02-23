@@ -26,7 +26,7 @@ class Bistro
 					proceed = $stdin.gets.chomp
 					if proceed === "y"
 						puts "Finding your available combos..."
-						menu.get_combos
+						p menu.get_combos
 					else
 						puts "OK, see you next time."
 					end
