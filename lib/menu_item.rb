@@ -1,4 +1,5 @@
 class MenuItem
+	include Comparable
 	attr_reader :price, :name
 
 	def initialize(name, string_price)
@@ -19,6 +20,14 @@ class MenuItem
 	def price_without_decimal
 		price_without_dollar_sign_as_arr = price.split(//).slice(1..-1).select{|i| i != "."}
 		price_without_dollar_sign_as_arr.join().to_i
+	end
+
+	def <=>(other_item)
+		self.name <=> other_item.name
+	end
+
+	def to_s
+		"#{self.name}, #{self.price}"
 	end
 
 	private

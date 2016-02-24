@@ -3,6 +3,8 @@ require_relative 'menu_item'
 
 class Bistro
 
+	include SetCombos
+
 	attr_reader :menu
 	attr_accessor :total_amount
 
@@ -21,7 +23,7 @@ class Bistro
 		if answer === "y"
 			if menu.items.empty? != true
 					puts "These are the available menu items: "
-					menu.items.each { |item| puts "#{item.name}, #{item.price}"}
+					menu.items.each { |item| puts item }
 					puts "Do you wish to proceed? [y/n]"
 					proceed = $stdin.gets.chomp
 					if proceed === "y"
@@ -36,6 +38,19 @@ class Bistro
 			else
 				puts "Then please update your input file."
 			end
+	end
+
+	def get_combos
+		combinations = self.calculate_combinations(total_amount, menu.items)
+		if combinations.empty?
+			puts "I'm afraid there are no combos that exactly equal your requested total."
+		else
+			# make combo object with a display method?
+			combinations.each do |combo|
+				puts "\n-----------\n"
+				puts combo
+			end
+		end
 	end
 
 	private 

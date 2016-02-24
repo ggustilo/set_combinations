@@ -1,17 +1,11 @@
+
 require_relative "set_combos_module"
 
 class Menu
-	include SetCombos
 	attr_reader :items
 
 	def initialize(items_array)
 		@items = Menu.validate_items(items_array)
-	end
-
-	def get_combos
-		prices = []
-		items.each {|item| prices << item.price_as_float}
-		permutations = self.get_sum_of_all_permutations(prices)
 	end
 
 	private
