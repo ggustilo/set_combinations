@@ -28,7 +28,7 @@ class Bistro
 					proceed = $stdin.gets.chomp
 					if proceed === "y"
 						puts "Finding your available combos..."
-						p menu.get_combos
+						self.get_combos()
 					else
 						puts "OK, see you next time."
 					end
@@ -41,11 +41,12 @@ class Bistro
 	end
 
 	def get_combos
-		combinations = self.calculate_combinations(total_amount, menu.items)
+		set = menu.items.select {|item| item.price_as_float <= total_amount}
+		empty_combo = Combo.new([])
+		combinations = self.calculate_combinations_that_sum_to_total(total_amount, set, empty_combo, [], [])
 		if combinations.empty?
 			puts "I'm afraid there are no combos that exactly equal your requested total."
 		else
-			# make combo object with a display method?
 			combinations.each do |combo|
 				puts "\n-----------\n"
 				puts combo
