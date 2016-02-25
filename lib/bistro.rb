@@ -42,15 +42,14 @@ class Bistro
 
 	def get_combos
 		set = menu.items.select {|item| item.price_as_float <= total_amount}
-		empty_combo = Combo.new([])
-		combinations = self.calculate_combinations_that_sum_to_total(total_amount, set, empty_combo, [], [])
+		combinations = self.subset_sum(total_amount, set, [], [])
 		if combinations.empty?
 			puts "I'm afraid there are no combos that exactly equal your requested total."
 		else
-			combinations.each do |combo|
-				puts "\n-----------\n"
-				puts combo
-			end
+			# combinations.each do |combo|
+			# 	puts "\n-----------\n"
+			# 	puts combo
+			# end
 		end
 	end
 

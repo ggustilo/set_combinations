@@ -1,30 +1,42 @@
-# require "set_combos/version.rb" #testing
-require "./set_combos/version.rb" #run app
+require "set_combos/version.rb" #testing
+# require "./set_combos/version.rb" #run app
 require 'pry'
 
 module SetCombos
 
-	def calculate_combinations_that_sum_to_total(target, set, working_combo, all_combos, valid_combos)
-		puts working_combo
-		puts working_combo.combo.length
-		if all_combos.include?(working_combo)
-			#take off the last item and send it through again
-		else
-			all_combos << working_combo
-			sum = working_combo.get_sum()
-			if sum > target
-				# take off the last item and send it through again
-			elsif sum == target
-				valid_combos << working_combo
-			else 
-				r = rand(0..set.length-1)
-				working_combo.combo << set[r]
-				new_working_combo = Combo.new(working_combo.combo)
-				calculate_combinations_that_sum_to_total(target, set, new_working_combo, all_combos, valid_combos)
-			end
+	def subset_sum(target, set, current_combo, evaluated_combos)
+		puts "COMBOS +++++++++++++++++++++"
+		evaluated_combos.each do |combo|
+			p combo
 		end
-		puts all_combos.length
-		valid_combos
+		puts "+++++++++++++++++++++++++++\n"
+		if !evaluated_combos.include?(current_combo)
+			r = rand(0..set.length-1)
+			puts "R: #{r} ____________________"
+			puts "NEW ITEM: #{set[r]}"
+			current_combo << set[r]
+			sum = 0
+			current_combo.each do |item|
+				sum += item.price_as_float
+			end
+			puts "SUM: #{sum}____________________"
+			if sum >= target
+				evaluated_combos.push(current_combo)
+				# make sure evaluated combos still gets passed
+				return
+			else
+				# set = set.select { |item| item.price_as_float < target-sum }
+				# if !set.empty?
+					subset_sum(target, set, current_combo, evaluated_combos)
+				# else
+				# 	evaluated_combos.push(current_combo)
+				# 	return
+				# end
+			end
+		else
+			return evaluated_combos
+		end
+		return evaluated_combos
 	end
 
 
