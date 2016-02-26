@@ -1,6 +1,7 @@
-# $LOAD_PATH << File.expand_path("..", __FILE__)
+$LOAD_PATH << File.expand_path("..", __FILE__)
 
 require 'benchmark'
+require_relative 'bistro'
 
 puts "Welcome to Combos Bistro.\nPlease provide a filepath to the menu file you wish to use.\nNote: Any invalid menu items will throw an error - so please check for typos!\n"
 

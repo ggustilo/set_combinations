@@ -4,41 +4,40 @@ require 'pry'
 
 module SetCombos
 
+
 	def subset_sum(target, set, current_combo, evaluated_combos)
-		puts "COMBOS +++++++++++++++++++++"
-		evaluated_combos.each do |combo|
-			p combo
-		end
-		puts "+++++++++++++++++++++++++++\n"
+		puts "COMBOS: #{evaluated_combos.length}"
 		if !evaluated_combos.include?(current_combo)
-			r = rand(0..set.length-1)
-			puts "R: #{r} ____________________"
-			puts "NEW ITEM: #{set[r]}"
-			current_combo << set[r]
 			sum = 0
 			current_combo.each do |item|
 				sum += item.price_as_float
 			end
-			puts "SUM: #{sum}____________________"
+			puts "SUM: #{sum}"
 			if sum >= target
+				puts "PUSHING ANOTHER COMBO"
 				evaluated_combos.push(current_combo)
-				# make sure evaluated combos still gets passed
-				return
 			else
-				# set = set.select { |item| item.price_as_float < target-sum }
-				# if !set.empty?
-					subset_sum(target, set, current_combo, evaluated_combos)
-				# else
-				# 	evaluated_combos.push(current_combo)
-				# 	return
-				# end
+				r = rand(0..set.length-1)
+				puts "NEXT ITEM: #{set[r]}"
+				current_combo << set[r]
 			end
+		 		evaluated_combos += subset_sum(target, set, current_combo, evaluated_combos)
 		else
-			return evaluated_combos
+			last_item = current_combo.pop()
+			puts "ITEM THAT WENT OVER: #{last_item.name}"
+			set = set.select{|item| item != last_item}
+			puts "SET: #{set}\n"
+			if !set.empty?
+				r = rand(0..set.length-1)
+				current_combo << set[r]
+				puts "TRYING AGAIN: #{set[r].name}"
+				subset_sum(target, set, current_combo, evaluated_combos)
+			else
+				return
+			end
 		end
-		return evaluated_combos
+		evaluated_combos
 	end
-
 
 	class Combo
 
@@ -72,7 +71,7 @@ module SetCombos
 			self.combo.each do |item|
 				prices << item.price_as_float
 			end
-			sum = prices.reduce(:+)
+			sum = prices.reduce(:+).round(2)
 			if sum == total
 				true
 			else
