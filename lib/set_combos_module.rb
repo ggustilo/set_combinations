@@ -4,39 +4,29 @@ require 'pry'
 
 module SetCombos
 
-
 	def subset_sum(target, set, current_combo, evaluated_combos)
-		puts "COMBOS: #{evaluated_combos.length}"
-		if !evaluated_combos.include?(current_combo)
-			sum = 0
-			current_combo.each do |item|
-				sum += item.price_as_float
-			end
-			puts "SUM: #{sum}"
-			if sum >= target
-				puts "PUSHING ANOTHER COMBO"
-				evaluated_combos.push(current_combo)
-			else
-				r = rand(0..set.length-1)
-				puts "NEXT ITEM: #{set[r]}"
-				current_combo << set[r]
-			end
-		 		evaluated_combos += subset_sum(target, set, current_combo, evaluated_combos)
-		else
-			last_item = current_combo.pop()
-			puts "ITEM THAT WENT OVER: #{last_item.name}"
-			set = set.select{|item| item != last_item}
-			puts "SET: #{set}\n"
-			if !set.empty?
-				r = rand(0..set.length-1)
-				current_combo << set[r]
-				puts "TRYING AGAIN: #{set[r].name}"
+		# puts "NUMCOMBOS: #{evaluated_combos.length}"
+			if !evaluated_combos.include?(current_combo)
+				sum = get_sum(current_combo)
+				if sum >= target
+					evaluated_combos.push(current_combo)
+					current_combo = []
+				else
+					r = rand(0..set.length - 1)
+					next_item = set[r]
+					current_combo << next_item
+				end
 				subset_sum(target, set, current_combo, evaluated_combos)
-			else
-				return
 			end
+			evaluated_combos
+	end
+
+	def get_sum(current_combo)
+		prices = []
+		current_combo.each do |item|
+			prices << item.price_as_float
 		end
-		evaluated_combos
+		prices.reduce(0, :+)
 	end
 
 	class Combo
@@ -47,13 +37,6 @@ module SetCombos
 			@combo = items_array
 		end
 
-		def get_sum
-			prices = []
-			combo.each do |item|
-				prices << item.price_as_float
-			end
-			prices.reduce(0, :+)
-		end
 
 		def same?(another_combo)
 			self.combo.sort.each_with_index do |item, index|

@@ -44,38 +44,7 @@ iterate through items
 	divide total by each item price and see if there is a clean division with any of them
 
 	find all permutations of the set at length - i (where i is 0 to length - 1)
-
-	choose a random item from the set and add it to the sum
-	if the sum is greater than the total,
-		then just return
-	if the sum is exactly the total
-		then check if that combo has already been made
-		if not, add it to an array of combos
-		if so, discard it
-	if the sum is less than the total
-		call again
-
-	if we don't already have this combination
-		add it
-		calculate sum
-		if its above target, ditch it
-		if its at target, return it to valid combos array
-		if its below target
-		add a new element
-			try again
-	else
-		start a new combination
-	end
-
-if current_combo is not in the evaluated combos
-	choose an item and add to current combo
-		is the total reached?
-		No:  choose another item and add to current combo (call again)
-		Yes:  add the combo to evaluated combos
-else
-	return
-end
-	return valid
+	
 
 
 =end

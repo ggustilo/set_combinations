@@ -46,7 +46,8 @@ class Bistro
 		if combinations.empty?
 			puts "I'm afraid there are no combos that exactly equal your requested total."
 		else
-			puts combinations.length
+			puts combinations[0]
+			puts self.get_sum(combinations[0])
 			combinations.each do |combo|
 				combo_obj = Combo.new(combo)
 				if combo_obj.sums_to_total?(total_amount)
