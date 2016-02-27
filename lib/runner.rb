@@ -11,5 +11,5 @@ bistro.take_order()
 
 
 Benchmark.bm(15) do |x|
-  x.report("Time to run sets:") { bistro.get_combos() }
+  x.report("Time to run sets:") { bistro.get_combo() }
 end

@@ -3,22 +3,36 @@ require "set_combos/version.rb" #testing
 require 'pry'
 
 module SetCombos
-
-	def subset_sum(target, set, current_combo, evaluated_combos)
-		# puts "NUMCOMBOS: #{evaluated_combos.length}"
-			if !evaluated_combos.include?(current_combo)
-				sum = get_sum(current_combo)
-				if sum >= target
-					evaluated_combos.push(current_combo)
+	# target = 3 set = [1,2,3]
+	def find_valid_combo(target, set, current_combo)
+		set.each do |obj|
+			# puts "SUM: #{get_sum(current_combo)}"
+			if get_sum(current_combo) == target
+				# puts "YAY. GOT ONE!"
+				# puts "COMBO LENGTH WHEN YAY: #{current_combo.length}"
+				return Combo.new(current_combo)
+			else
+				current_combo << obj
+				if get_sum(current_combo) == target
+				# puts "YAY. GOT ONE!"
+				# puts "COMBO LENGTH WHEN YAY: #{current_combo.length}"
+					combo = Combo.new(current_combo)
 					current_combo = []
-				else
-					r = rand(0..set.length - 1)
-					next_item = set[r]
-					current_combo << next_item
+					return combo
+				elsif get_sum(current_combo) > target
+					# puts "TOO MUCH -- POPPING"
+					# puts "COMBO LENGTH BEFORE: #{current_combo.length}"
+					last = current_combo.pop()
+					# puts "POPPED OFF: #{last}"
+					# puts "COMBO LENGTH AFTER: #{current_combo.length}"
+					# next
+				else #get_sum(current_combo) < target
+					# puts "OK, RUN IT AGAIN"
+					# puts "CURRENT OBJ: #{obj}"
+					find_valid_combo(target, set, current_combo)
 				end
-				subset_sum(target, set, current_combo, evaluated_combos)
 			end
-			evaluated_combos
+		end
 	end
 
 	def get_sum(current_combo)

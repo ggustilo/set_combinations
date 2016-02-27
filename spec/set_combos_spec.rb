@@ -1,20 +1,21 @@
 require 'spec_helper'
 
 describe SetCombos do
+	let(:item1) { MenuItem.new("soup", "$1.00") }
+	let(:item2) { MenuItem.new("burger", "$4.50") }
+	let(:item3) { MenuItem.new("pie", "$2.40") }
+
+	let(:combo1) { SetCombos::Combo.new([item1, item2, item3])}
+  
   it 'has a version number' do
     expect(SetCombos::VERSION).not_to be nil
   end
 
   it 'calculates available combinations for a set and stores them as combo objects' do
-    # expect(false).to eq(true)
+    expect(SetCombos.find_valid_combo(6.90, combo1, [])).to be_a(Combo)
   end
 
   describe SetCombos::Combo do
-  	let(:item1) { MenuItem.new("soup", "$1.00") }
-  	let(:item2) { MenuItem.new("burger", "$4.50") }
-  	let(:item3) { MenuItem.new("pie", "$2.40") }
-
-  	let(:combo1) { SetCombos::Combo.new([item1, item2, item3])}
   	let(:valid_combo2) { SetCombos::Combo.new([item2, item3, item1])}
   	let(:invalid_combo2) { SetCombos::Combo.new([item2, item3, item2, item1])}
   	random_number = rand(0..2)
@@ -25,7 +26,7 @@ describe SetCombos do
 
     describe "get_sum method" do
       it 'returns the sum of a combos items prices' do
-        expect(combo1.get_sum()).to eq(7.90)
+        expect(SetCombos.get_sum(combo1)).to eq(7.90)
       end
     end
 
