@@ -6,29 +6,28 @@ module SetCombos
 	# target = 3 set = [1,2,3]
 	def find_valid_combo(target, set, current_combo)
 		set.each do |obj|
-			# puts "SUM: #{get_sum(current_combo)}"
+			puts "SUM: #{get_sum(current_combo)}"
 			if get_sum(current_combo) == target
-				# puts "YAY. GOT ONE!"
-				# puts "COMBO LENGTH WHEN YAY: #{current_combo.length}"
+				puts "YAY. GOT ONE!"
+				puts "COMBO LENGTH WHEN YAY: #{current_combo.length}"
 				return Combo.new(current_combo)
 			else
 				current_combo << obj
 				if get_sum(current_combo) == target
-				# puts "YAY. GOT ONE!"
-				# puts "COMBO LENGTH WHEN YAY: #{current_combo.length}"
+				puts "YAY. GOT ONE!"
+				puts "COMBO LENGTH WHEN YAY: #{current_combo.length}"
 					combo = Combo.new(current_combo)
 					current_combo = []
 					return combo
 				elsif get_sum(current_combo) > target
-					# puts "TOO MUCH -- POPPING"
-					# puts "COMBO LENGTH BEFORE: #{current_combo.length}"
+					puts "TOO MUCH -- POPPING"
+					puts "COMBO LENGTH BEFORE: #{current_combo.length}"
 					last = current_combo.pop()
-					# puts "POPPED OFF: #{last}"
-					# puts "COMBO LENGTH AFTER: #{current_combo.length}"
-					# next
+					puts "POPPED OFF: #{last}"
+					puts "COMBO LENGTH AFTER: #{current_combo.length}"
 				else #get_sum(current_combo) < target
-					# puts "OK, RUN IT AGAIN"
-					# puts "CURRENT OBJ: #{obj}"
+					puts "OK, RUN IT AGAIN"
+					puts "CURRENT OBJ: #{obj}"
 					find_valid_combo(target, set, current_combo)
 				end
 			end

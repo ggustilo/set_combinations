@@ -1,6 +1,7 @@
 require 'spec_helper'
 
 describe SetCombos do
+  let(:bistro) { Bistro.new("./test_menu.txt")}
 	let(:item1) { MenuItem.new("soup", "$1.00") }
 	let(:item2) { MenuItem.new("burger", "$4.50") }
 	let(:item3) { MenuItem.new("pie", "$2.40") }
@@ -12,7 +13,7 @@ describe SetCombos do
   end
 
   it 'calculates available combinations for a set and stores them as combo objects' do
-    expect(SetCombos.find_valid_combo(6.90, combo1, [])).to be_a(Combo)
+    expect(bistro.find_valid_combo(6.90, combo1.combo, [])).to be_a(SetCombos::Combo)
   end
 
   describe SetCombos::Combo do
@@ -26,7 +27,7 @@ describe SetCombos do
 
     describe "get_sum method" do
       it 'returns the sum of a combos items prices' do
-        expect(SetCombos.get_sum(combo1)).to eq(7.90)
+        expect(bistro.get_sum(combo1.combo)).to eq(7.90)
       end
     end
 

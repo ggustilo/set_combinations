@@ -27,7 +27,7 @@ class Bistro
 					puts "Do you wish to proceed? [y/n]"
 					proceed = $stdin.gets.chomp
 					if proceed === "y"
-						puts "Finding your available combos..."
+						puts "Finding the first available combo..."
 						self.get_combo()
 					else
 						puts "OK, see you next time."
