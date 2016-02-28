@@ -14,6 +14,7 @@ describe SetCombos do
 
   it 'calculates available combinations for a set and stores them as combo objects' do
     expect(bistro.find_valid_combo(6.90, combo1.combo, [])).to be_a(SetCombos::Combo)
+    expect(bistro.find_valid_combo(6.90, combo1.combo, []).combo.length).to eq(2)
   end
 
   describe SetCombos::Combo do
